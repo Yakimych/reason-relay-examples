@@ -28,6 +28,9 @@ let make = () => {
       <button onClick={_ => dispatch(Increment)}>
         {React.string("Increment")}
       </button>
+      <React.Suspense fallback={<div> {React.string("Loading...")} </div>}>
+        <Results />
+      </React.Suspense>
     </div>
   </main>;
 };
