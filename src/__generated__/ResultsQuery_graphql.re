@@ -1,16 +1,8 @@
 /* @generated */
 
 module Types = {
-  type response_results_connection_edges_node_community = {name: string};
-  type response_results_connection_edges_node_player2 = {name: string};
-  type response_results_connection_edges_node_player1 = {name: string};
   type response_results_connection_edges_node = {
-    id: string,
-    player1: response_results_connection_edges_node_player1,
-    player1goals: int,
-    player2: response_results_connection_edges_node_player2,
-    player2goals: int,
-    community: response_results_connection_edges_node_community,
+    fragmentRefs: ReasonRelay.fragmentRefs([ | `Result]),
   };
   type response_results_connection_edges = {
     node: response_results_connection_edges_node,
@@ -27,7 +19,7 @@ module Types = {
 module Internal = {
   type responseRaw;
   let responseConverter: Js.Dict.t(Js.Dict.t(Js.Dict.t(string))) = [%raw
-    {json| {} |json}
+    {json| {"__root":{"results_connection_edges_node":{"f":""}}} |json}
   ];
   let responseConverterMap = ();
   let convertResponse = v =>
@@ -82,32 +74,14 @@ v1 = {
   "name": "id",
   "storageKey": null
 },
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v3 = [
-  (v2/*: any*/)
-],
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "player1goals",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "player2goals",
-  "storageKey": null
-},
-v6 = [
-  (v2/*: any*/),
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "name",
+    "storageKey": null
+  },
   (v1/*: any*/)
 ];
 return {
@@ -141,38 +115,10 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/),
                   {
-                    "alias": null,
                     "args": null,
-                    "concreteType": "players",
-                    "kind": "LinkedField",
-                    "name": "player1",
-                    "plural": false,
-                    "selections": (v3/*: any*/),
-                    "storageKey": null
-                  },
-                  (v4/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "players",
-                    "kind": "LinkedField",
-                    "name": "player2",
-                    "plural": false,
-                    "selections": (v3/*: any*/),
-                    "storageKey": null
-                  },
-                  (v5/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "communities",
-                    "kind": "LinkedField",
-                    "name": "community",
-                    "plural": false,
-                    "selections": (v3/*: any*/),
-                    "storageKey": null
+                    "kind": "FragmentSpread",
+                    "name": "Result"
                   }
                 ],
                 "storageKey": null
@@ -225,10 +171,16 @@ return {
                     "kind": "LinkedField",
                     "name": "player1",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v2/*: any*/),
                     "storageKey": null
                   },
-                  (v4/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "player1goals",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -236,10 +188,16 @@ return {
                     "kind": "LinkedField",
                     "name": "player2",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v2/*: any*/),
                     "storageKey": null
                   },
-                  (v5/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "player2goals",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -247,7 +205,7 @@ return {
                     "kind": "LinkedField",
                     "name": "community",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v2/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -262,12 +220,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7c05dcd9ab0740c3843af5dcb2a015a3",
+    "cacheID": "352f84c1afe33c2c57d04480f3858675",
     "id": null,
     "metadata": {},
     "name": "ResultsQuery",
     "operationKind": "query",
-    "text": "query ResultsQuery {\n  results_connection(where: {community: {name: {_eq: \"test\"}}}) {\n    edges {\n      node {\n        id\n        player1 {\n          name\n          id\n        }\n        player1goals\n        player2 {\n          name\n          id\n        }\n        player2goals\n        community {\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ResultsQuery {\n  results_connection(where: {community: {name: {_eq: \"test\"}}}) {\n    edges {\n      node {\n        ...Result\n        id\n      }\n    }\n  }\n}\n\nfragment Result on results {\n  id\n  player1 {\n    name\n    id\n  }\n  player1goals\n  player2 {\n    name\n    id\n  }\n  player2goals\n  community {\n    name\n    id\n  }\n}\n"
   }
 };
 })() |json}
