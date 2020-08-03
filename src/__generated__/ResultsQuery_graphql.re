@@ -21,11 +21,7 @@ module Types = {
 
   type response = {results_connection: response_results_connection};
   type rawResponse = response;
-  type refetchVariables = {communityName: option(string)};
-  let makeRefetchVariables = (~communityName=?, ()): refetchVariables => {
-    communityName: communityName,
-  };
-  type variables = {communityName: string};
+  type variables = unit;
 };
 
 module Internal = {
@@ -60,12 +56,7 @@ module Internal = {
 
 type queryRef;
 
-module Utils = {
-  open Types;
-  let makeVariables = (~communityName): variables => {
-    communityName: communityName,
-  };
-};
+module Utils = {};
 
 type operationType = ReasonRelay.queryNode;
 
@@ -73,81 +64,62 @@ let node: operationType = [%raw
   {json| (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "communityName"
-  }
-],
-v1 = [
-  {
-    "fields": [
-      {
-        "fields": [
-          {
-            "fields": [
-              {
-                "kind": "Variable",
-                "name": "_eq",
-                "variableName": "communityName"
-              }
-            ],
-            "kind": "ObjectValue",
-            "name": "name"
-          }
-        ],
-        "kind": "ObjectValue",
-        "name": "community"
+    "kind": "Literal",
+    "name": "where",
+    "value": {
+      "community": {
+        "name": {
+          "_eq": "test"
+        }
       }
-    ],
-    "kind": "ObjectValue",
-    "name": "where"
+    }
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v4 = [
-  (v3/*: any*/)
+v3 = [
+  (v2/*: any*/)
 ],
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "player1goals",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "player2goals",
   "storageKey": null
 },
-v7 = [
-  (v3/*: any*/),
-  (v2/*: any*/)
+v6 = [
+  (v2/*: any*/),
+  (v1/*: any*/)
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "ResultsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "resultsConnection",
         "kind": "LinkedField",
         "name": "results_connection",
@@ -169,7 +141,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -177,10 +149,10 @@ return {
                     "kind": "LinkedField",
                     "name": "player1",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
-                  (v5/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -188,10 +160,10 @@ return {
                     "kind": "LinkedField",
                     "name": "player2",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
-                  (v6/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -199,7 +171,7 @@ return {
                     "kind": "LinkedField",
                     "name": "community",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -209,7 +181,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": null
+        "storageKey": "results_connection(where:{\"community\":{\"name\":{\"_eq\":\"test\"}}})"
       }
     ],
     "type": "query_root",
@@ -217,13 +189,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ResultsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "resultsConnection",
         "kind": "LinkedField",
         "name": "results_connection",
@@ -245,7 +217,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -253,10 +225,10 @@ return {
                     "kind": "LinkedField",
                     "name": "player1",
                     "plural": false,
-                    "selections": (v7/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
-                  (v5/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -264,10 +236,10 @@ return {
                     "kind": "LinkedField",
                     "name": "player2",
                     "plural": false,
-                    "selections": (v7/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
-                  (v6/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -275,7 +247,7 @@ return {
                     "kind": "LinkedField",
                     "name": "community",
                     "plural": false,
-                    "selections": (v7/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -285,17 +257,17 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": null
+        "storageKey": "results_connection(where:{\"community\":{\"name\":{\"_eq\":\"test\"}}})"
       }
     ]
   },
   "params": {
-    "cacheID": "4d0e0b9dad0f259a12cdb440f20aa4e9",
+    "cacheID": "7c05dcd9ab0740c3843af5dcb2a015a3",
     "id": null,
     "metadata": {},
     "name": "ResultsQuery",
     "operationKind": "query",
-    "text": "query ResultsQuery(\n  $communityName: String!\n) {\n  results_connection(where: {community: {name: {_eq: $communityName}}}) {\n    edges {\n      node {\n        id\n        player1 {\n          name\n          id\n        }\n        player1goals\n        player2 {\n          name\n          id\n        }\n        player2goals\n        community {\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ResultsQuery {\n  results_connection(where: {community: {name: {_eq: \"test\"}}}) {\n    edges {\n      node {\n        id\n        player1 {\n          name\n          id\n        }\n        player1goals\n        player2 {\n          name\n          id\n        }\n        player2goals\n        community {\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })() |json}

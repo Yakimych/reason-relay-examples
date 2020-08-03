@@ -1,7 +1,7 @@
 module Query = [%relay.query
   {|
-    query ResultsQuery($communityName: String!) {
-      results_connection(where: { community: { name: { _eq: $communityName } } }) {
+    query ResultsQuery {
+      results_connection(where: { community: { name: { _eq: "test" } } }) {
         edges {
           node {
             id
@@ -41,7 +41,7 @@ let renderResult =
 
 [@react.component]
 let make = () => {
-  let queryData = Query.use(~variables={communityName: "test"}, ());
+  let queryData = Query.use(~variables=(), ());
 
   <div>
     <span>
