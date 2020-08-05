@@ -1,9 +1,10 @@
 /* @generated */
 
 module Types = {
-  type fragment_community = {name: string};
-  type fragment_player2 = {name: string};
-  type fragment_player1 = {name: string};
+  [@ocaml.warning "-30"];
+  type fragment_player1 = {name: string}
+  and fragment_player2 = {name: string}
+  and fragment_community = {name: string};
 
   type fragment = {
     id: string,

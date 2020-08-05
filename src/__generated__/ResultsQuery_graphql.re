@@ -1,14 +1,15 @@
 /* @generated */
 
 module Types = {
-  type response_results_connection_edges_node = {
-    fragmentRefs: ReasonRelay.fragmentRefs([ | `Result]),
-  };
-  type response_results_connection_edges = {
-    node: response_results_connection_edges_node,
-  };
+  [@ocaml.warning "-30"];
   type response_results_connection = {
     edges: array(response_results_connection_edges),
+  }
+  and response_results_connection_edges = {
+    node: response_results_connection_edges_node,
+  }
+  and response_results_connection_edges_node = {
+    fragmentRefs: ReasonRelay.fragmentRefs([ | `Result]),
   };
 
   type response = {results_connection: response_results_connection};
