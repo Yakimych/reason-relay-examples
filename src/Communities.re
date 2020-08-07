@@ -1,7 +1,9 @@
 module Query = [%relay.query
   {|
     query CommunitiesQuery {
-      communities_connection {
+      # communities_connection(first: 1000, where: { name: { _like: "%test%" } }) -- adding a filter breaks local store updater
+      communities_connection(first: 1000)
+        @connection(key: "CommunityList_query_communities_connection") {
         edges {
           node {
             ...Community
@@ -36,7 +38,44 @@ let make = () => {
   let (mutate, _isMutating) = AddCommunityMutation.use();
 
   let addCommunity = () => {
-    mutate(~variables=mutationVariables, ()) |> ignore;
+    mutate(
+      ~variables=mutationVariables,
+      ~updater=
+        (store, response) => {
+          Js.log2("store", store);
+          Js.log2("response: ", response);
+          ReasonRelayUtils.(
+            switch (
+              resolveNestedRecord(
+                ~rootRecord=
+                  store->ReasonRelay.RecordSourceSelectorProxy.getRootField(
+                    ~fieldName="insert_communities_one",
+                  ),
+                ~path=[],
+              )
+            ) {
+            | Some(node) =>
+              Js.log2("node: ", node);
+              createAndAddEdgeToConnections(
+                ~store,
+                ~node,
+                ~connections=[
+                  {
+                    parentID: ReasonRelay.storeRootId,
+                    key: "CommunityList_query_communities_connection",
+                    filters: None,
+                  },
+                ],
+                ~edgeName="communitiesEdge",
+                ~insertAt=End,
+              );
+            | None => Js.log("resolveNestedRecord returned None")
+            }
+          );
+        },
+      (),
+    )
+    |> ignore;
   };
 
   <div>
