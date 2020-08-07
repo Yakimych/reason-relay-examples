@@ -62,7 +62,53 @@ var v0 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "PageInfo",
+  "kind": "LinkedField",
+  "name": "pageInfo",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "endCursor",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "hasNextPage",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v4 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1000
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -71,11 +117,11 @@ return {
     "name": "CommunitiesQuery",
     "selections": [
       {
-        "alias": null,
+        "alias": "communities_connection",
         "args": null,
         "concreteType": "communitiesConnection",
         "kind": "LinkedField",
-        "name": "communities_connection",
+        "name": "__CommunityList_query_communities_connection_connection",
         "plural": false,
         "selections": [
           {
@@ -95,6 +141,7 @@ return {
                 "plural": false,
                 "selections": [
                   (v0/*: any*/),
+                  (v1/*: any*/),
                   {
                     "args": null,
                     "kind": "FragmentSpread",
@@ -102,10 +149,12 @@ return {
                   }
                 ],
                 "storageKey": null
-              }
+              },
+              (v2/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -121,7 +170,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": null,
+        "args": (v4/*: any*/),
         "concreteType": "communitiesConnection",
         "kind": "LinkedField",
         "name": "communities_connection",
@@ -150,25 +199,48 @@ return {
                     "kind": "ScalarField",
                     "name": "name",
                     "storageKey": null
-                  }
+                  },
+                  (v1/*: any*/)
                 ],
                 "storageKey": null
-              }
+              },
+              (v2/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v3/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "communities_connection(first:1000)"
+      },
+      {
+        "alias": null,
+        "args": (v4/*: any*/),
+        "filters": null,
+        "handle": "connection",
+        "key": "CommunityList_query_communities_connection",
+        "kind": "LinkedHandle",
+        "name": "communities_connection"
       }
     ]
   },
   "params": {
-    "cacheID": "7574af82018938515161ed1ffe2fc1bb",
+    "cacheID": "fa5f4fa544a01dea7cb81c59db21632e",
     "id": null,
-    "metadata": {},
+    "metadata": {
+      "connection": [
+        {
+          "count": null,
+          "cursor": null,
+          "direction": "forward",
+          "path": [
+            "communities_connection"
+          ]
+        }
+      ]
+    },
     "name": "CommunitiesQuery",
     "operationKind": "query",
-    "text": "query CommunitiesQuery {\n  communities_connection {\n    edges {\n      node {\n        ...Community\n        id\n      }\n    }\n  }\n}\n\nfragment Community on communities {\n  id\n  name\n}\n"
+    "text": "query CommunitiesQuery {\n  communities_connection(first: 1000) {\n    edges {\n      node {\n        ...Community\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Community on communities {\n  id\n  name\n}\n"
   }
 };
 })() |json}
