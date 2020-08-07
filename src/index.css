@@ -23,3 +23,16 @@ main {
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.communitycol {
+  width: 100px;
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.communityidcol {
+  font-size: small;
+  margin-left: 10px;
+  margin-right: 10px;
+}

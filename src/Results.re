@@ -13,19 +13,54 @@ module Query = [%relay.query
   |}
 ];
 
+module AddResultMutation = [%relay.mutation
+  {|
+    mutation Results_AddResultMutation {
+      insert_results_one(
+        object: {
+          community: {
+            data: { name: "test2" }
+            on_conflict: { constraint: communities_name_key, update_columns: name }
+          }
+          player1Id: 203
+          player2Id: 208
+          player1goals: 3
+          player2goals: 2
+          date: "2020-01-01"
+          extratime: false
+        }
+      ) {
+        id
+        player1 {
+          name
+        }
+        player1goals
+        player2 {
+          name
+        }
+        player2goals
+        community {
+          name
+        }
+      }
+    }
+  |}
+];
+
 [@react.component]
 let make = () => {
   let queryData = Query.use(~variables=(), ());
   let results = queryData.results_connection.edges;
 
   <div>
-    <button onClick={_ => Js.log("Clicked on 'Add'")}>
-      {React.string("Add")}
-    </button>
-    <h3> {React.string("Results")} </h3>
-    {results->Belt.Array.map(result =>
-       <Result result={result.node.fragmentRefs} key={result.node.id} />
-     )
-     |> React.array}
-  </div>;
+
+      <h3> {React.string("Results")} </h3>
+      {results->Belt.Array.map(result =>
+         <Result result={result.node.fragmentRefs} key={result.node.id} />
+       )
+       |> React.array}
+    </div>;
+    // </button>
+    //   {React.string("Add")}
+    // <button onClick={_ => Js.log("Clicked on 'Add'")}>
 };
