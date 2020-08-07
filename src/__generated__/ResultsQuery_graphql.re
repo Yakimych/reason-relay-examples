@@ -9,6 +9,7 @@ module Types = {
     node: response_results_connection_edges_node,
   }
   and response_results_connection_edges_node = {
+    id: string,
     fragmentRefs: ReasonRelay.fragmentRefs([ | `Result]),
   };
 
@@ -116,6 +117,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
+                  (v1/*: any*/),
                   {
                     "args": null,
                     "kind": "FragmentSpread",

@@ -18,11 +18,6 @@ main {
   width: 100px;
 }
 
-.ratingcol {
-  display: inline-block;
-  width: 40px;
-}
-
 .goalscol {
   display: inline-block;
   margin-left: 10px;
