@@ -1,9 +1,8 @@
 module Query = [%relay.query
   {|
     query CommunitiesQuery {
-      # communities_connection(first: 1000, where: { name: { _like: "%test%" } }) -- adding a filter breaks local store updater
-      communities_connection(first: 1000)
-        @connection(key: "CommunityList_query_communities_connection") {
+      communities_connection(first: 1000, where: { name: { _like: "%test%" } })
+        @connection(key: "CommunityList_query_communities_connection", filters: ["where"]) {
         edges {
           node {
             ...Community
@@ -63,7 +62,16 @@ let make = () => {
                   {
                     parentID: ReasonRelay.storeRootId,
                     key: "CommunityList_query_communities_connection",
-                    filters: None,
+                    filters:
+                      Some(
+                        ReasonRelay.makeArguments({
+                          "where": {
+                            "name": {
+                              "_like": "%test%",
+                            },
+                          },
+                        }),
+                      ),
                   },
                 ],
                 ~edgeName="communitiesEdge",

@@ -57,27 +57,36 @@ type operationType = ReasonRelay.queryNode;
 let node: operationType = [%raw
   {json| (function(){
 var v0 = {
+  "kind": "Literal",
+  "name": "where",
+  "value": {
+    "name": {
+      "_like": "%test%"
+    }
+  }
+},
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -102,12 +111,13 @@ v3 = {
   ],
   "storageKey": null
 },
-v4 = [
+v5 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 1000
-  }
+  },
+  (v0/*: any*/)
 ];
 return {
   "fragment": {
@@ -118,7 +128,9 @@ return {
     "selections": [
       {
         "alias": "communities_connection",
-        "args": null,
+        "args": [
+          (v0/*: any*/)
+        ],
         "concreteType": "communitiesConnection",
         "kind": "LinkedField",
         "name": "__CommunityList_query_communities_connection_connection",
@@ -140,8 +152,8 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v0/*: any*/),
                   (v1/*: any*/),
+                  (v2/*: any*/),
                   {
                     "args": null,
                     "kind": "FragmentSpread",
@@ -150,13 +162,13 @@ return {
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "__CommunityList_query_communities_connection_connection(where:{\"name\":{\"_like\":\"%test%\"}})"
       }
     ],
     "type": "query_root",
@@ -170,7 +182,7 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": (v4/*: any*/),
+        "args": (v5/*: any*/),
         "concreteType": "communitiesConnection",
         "kind": "LinkedField",
         "name": "communities_connection",
@@ -192,7 +204,7 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v0/*: any*/),
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -200,22 +212,24 @@ return {
                     "name": "name",
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
-        "storageKey": "communities_connection(first:1000)"
+        "storageKey": "communities_connection(first:1000,where:{\"name\":{\"_like\":\"%test%\"}})"
       },
       {
         "alias": null,
-        "args": (v4/*: any*/),
-        "filters": null,
+        "args": (v5/*: any*/),
+        "filters": [
+          "where"
+        ],
         "handle": "connection",
         "key": "CommunityList_query_communities_connection",
         "kind": "LinkedHandle",
@@ -224,7 +238,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fa5f4fa544a01dea7cb81c59db21632e",
+    "cacheID": "0b61b083b46a92b2ee9337155fb96fe1",
     "id": null,
     "metadata": {
       "connection": [
@@ -240,7 +254,7 @@ return {
     },
     "name": "CommunitiesQuery",
     "operationKind": "query",
-    "text": "query CommunitiesQuery {\n  communities_connection(first: 1000) {\n    edges {\n      node {\n        ...Community\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Community on communities {\n  id\n  name\n}\n"
+    "text": "query CommunitiesQuery {\n  communities_connection(first: 1000, where: {name: {_like: \"%test%\"}}) {\n    edges {\n      node {\n        ...Community\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment Community on communities {\n  id\n  name\n}\n"
   }
 };
 })() |json}
