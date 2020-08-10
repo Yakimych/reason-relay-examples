@@ -2,7 +2,10 @@ module Query = [%relay.query
   {|
     query CommunitiesQuery {
       communities_connection(first: 1000, where: { name: { _like: "%test%" } })
-        @connection(key: "CommunityList_query_communities_connection", filters: ["where"]) {
+        @connection(
+          key: "CommunityList_query_communities_connection"
+          filters: ["where"]
+        ) {
         edges {
           node {
             ...Community
@@ -29,6 +32,15 @@ module AddCommunityMutation = [%relay.mutation
 let make = () => {
   let queryData = Query.use(~variables=(), ());
   let communities = queryData.communities_connection.edges;
+  let communityIds = communities->Belt.Array.map(e => e.node.id);
+
+  let lastRenderedCommunityIds = React.useRef(Js.Nullable.null);
+
+  Js.log("Community: render called");
+  Js.log2("Community ids: ", communityIds);
+  Js.log2("Last rendered community ids: ", lastRenderedCommunityIds.current);
+  lastRenderedCommunityIds.current =
+    Some(communityIds)->Js.Nullable.fromOption;
 
   let (communityName, setCommunityName) = React.useState(() => "");
 
@@ -40,9 +52,7 @@ let make = () => {
     mutate(
       ~variables=mutationVariables,
       ~updater=
-        (store, response) => {
-          Js.log2("store", store);
-          Js.log2("response: ", response);
+        (store, _response) => {
           ReasonRelayUtils.(
             switch (
               resolveNestedRecord(
@@ -54,7 +64,6 @@ let make = () => {
               )
             ) {
             | Some(node) =>
-              Js.log2("node: ", node);
               createAndAddEdgeToConnections(
                 ~store,
                 ~node,
@@ -76,10 +85,10 @@ let make = () => {
                 ],
                 ~edgeName="communitiesEdge",
                 ~insertAt=End,
-              );
+              )
             | None => Js.log("resolveNestedRecord returned None")
             }
-          );
+          )
         },
       (),
     )

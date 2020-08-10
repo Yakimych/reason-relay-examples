@@ -6,5 +6,3 @@ ReactExperimental.renderConcurrentRootAtElementWithId(
   </ReasonRelay.Context.Provider>,
   "root",
 );
-
-// ReactDOMRe.renderToElementWithId(<App />, "root");

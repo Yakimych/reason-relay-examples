@@ -4,9 +4,8 @@ let make = () => {
     {React.string("ReasonRelay examples")}
     <div>
       <React.Suspense fallback={<div> {React.string("Loading...")} </div>}>
-        <Communities />
-        <Results />
-      </React.Suspense>
+         <Communities /> </React.Suspense>
+        // <Results />
     </div>
   </main>;
 };
