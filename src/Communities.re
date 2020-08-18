@@ -2,7 +2,10 @@ module Query = [%relay.query
   {|
     query CommunitiesQuery {
       communities_connection(first: 1000, where: { name: { _like: "%test%" } })
-        @connection(key: "CommunityList_query_communities_connection", filters: ["where"]) {
+        @connection(
+          key: "CommunityList_query_communities_connection"
+          filters: ["where"]
+        ) {
         edges {
           node {
             ...Community
@@ -27,7 +30,7 @@ module AddCommunityMutation = [%relay.mutation
 
 [@react.component]
 let make = () => {
-  let queryData = Query.use(~variables=(), ());
+  let queryData = Query.use(~variables=(), ~fetchPolicy=StoreOrNetwork, ());
   let communities = queryData.communities_connection.edges;
 
   let (communityName, setCommunityName) = React.useState(() => "");
@@ -87,6 +90,12 @@ let make = () => {
   };
 
   <div>
+    <div className="header">
+      <h1> {React.string("Header")} </h1>
+      <button onClick={_ => ReasonReactRouter.push("results")}>
+        {React.string("Results")}
+      </button>
+    </div>
     <input
       type_="text"
       onChange={e => {
