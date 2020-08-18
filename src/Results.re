@@ -49,7 +49,7 @@ module AddResultMutation = [%relay.mutation
 
 [@react.component]
 let make = () => {
-  let queryData = Query.use(~variables=(), ());
+  let queryData = Query.use(~variables=(), ~fetchPolicy=StoreOrNetwork, ());
   let results = queryData.results_connection.edges;
 
   <div>

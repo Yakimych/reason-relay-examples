@@ -30,7 +30,7 @@ module AddCommunityMutation = [%relay.mutation
 
 [@react.component]
 let make = () => {
-  let queryData = Query.use(~variables=(), ());
+  let queryData = Query.use(~variables=(), ~fetchPolicy=StoreOrNetwork, ());
   let communities = queryData.communities_connection.edges;
 
   let (communityName, setCommunityName) = React.useState(() => "");
