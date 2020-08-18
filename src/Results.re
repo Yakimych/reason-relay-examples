@@ -53,14 +53,16 @@ let make = () => {
   let results = queryData.results_connection.edges;
 
   <div>
-
-      <h3> {React.string("Results")} </h3>
-      {results->Belt.Array.map(result =>
-         <Result result={result.node.fragmentRefs} key={result.node.id} />
-       )
-       |> React.array}
-    </div>;
-    // </button>
-    //   {React.string("Add")}
-    // <button onClick={_ => Js.log("Clicked on 'Add'")}>
+    <div className="header">
+      <h1> {React.string("Header")} </h1>
+      <button onClick={_ => ReasonReactRouter.push("communities")}>
+        {React.string("Communities")}
+      </button>
+    </div>
+    <h3> {React.string("Results")} </h3>
+    {results->Belt.Array.map(result =>
+       <Result result={result.node.fragmentRefs} key={result.node.id} />
+     )
+     |> React.array}
+  </div>;
 };
